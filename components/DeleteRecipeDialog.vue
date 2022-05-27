@@ -12,9 +12,9 @@
     <v-card>
       <v-card-title>Delete Recipe</v-card-title>
       <v-card-text>
-        <p>
+        <div>
           Are you sure you want to delete <span class="font-weight-bold">{{ recipeDetails.title }}</span>?
-        </p>
+        </div>
       </v-card-text>
       <v-divider></v-divider>
       <v-card-actions class="pa-6">

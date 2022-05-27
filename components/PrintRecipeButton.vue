@@ -1,5 +1,5 @@
 <template>
-  <v-btn outlined @click="print">Print Recipe</v-btn>
+  <v-btn outlined @click="print" block>Print Recipe</v-btn>
 </template>
 
 <script>

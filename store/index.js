@@ -19,11 +19,9 @@ export const actions = {
     let recipes = docs
       .map(d => {
         let data = d.data();
-        let favorite = data.favorite == 'TRUE';
         return {
           ...data,
           id: d.id,
-          favorite
         }
       }).sort((a, b) => a.title > b.title ? 1 : -1);
 

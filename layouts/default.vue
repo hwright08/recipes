@@ -1,7 +1,7 @@
 <template>
   <v-app>
-    <v-navigation-drawer app>
-      <AddRecipeDialog />
+    <v-navigation-drawer v-model="drawer" app clipped>
+      <RecipeDialog />
       <v-expansion-panels accordion multiple>
         <v-expansion-panel
           v-for="group in groupedRecipes"
@@ -30,6 +30,10 @@
       </v-expansion-panels>
     </v-navigation-drawer>
 
+    <v-app-bar v-if="$vuetify.breakpoint.mdAndDown" app clipped-left>
+      <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
+    </v-app-bar>
+
     <v-main >
       <Nuxt />
     </v-main>
@@ -44,6 +48,14 @@ export default {
   name: 'DefaultLayout',
 
   middleware: ['auth'],
+
+  created() {
+    if (!this.$vuetify.breakpoint.mdAndUp) this.drawer = false;
+  },
+
+  data: () => ({
+    drawer: true,
+  }),
 
   computed: {
     ...mapState(['recipes']),

@@ -12,7 +12,7 @@
           </v-chip>
         </h1>
       </v-col>
-      <v-col cols="auto">
+      <v-col cols="12" md="auto">
         <PrintRecipeButton />
       </v-col>
     </v-row>
@@ -20,33 +20,33 @@
     <p class="my-4">{{ recipeDetails.description }}</p>
 
     <v-row>
-      <v-col>
+      <v-col cols="12" sm="6" md="3">
         <span class="font-weight-bold">Serving Size:</span>
         {{ recipeDetails.serving_size || 0 }}
       </v-col>
-      <v-col>
+      <v-col cols="12" sm="6" md="3">
         <span class="font-weight-bold">Total Time:</span>
         {{ totalTime }}
       </v-col>
-      <v-col>
+      <v-col cols="12" sm="6" md="3">
         <span class="font-weight-bold">Prep Time:</span>
         {{ formatTime(recipeDetails.prep_time || 0) }}
       </v-col>
-      <v-col>
+      <v-col cols="12" sm="6" md="3">
         <span class="font-weight-bold">Cook Time:</span>
         {{ formatTime(recipeDetails.cook_time || 0) }}
       </v-col>
     </v-row>
 
     <v-row>
-      <v-col cols="2">
+      <v-col cols="12" sm="4" lg="3">
         <h2>Ingredients</h2>
         <p v-for="(ingredient, index) in recipeDetails.ingredients" :key="`ing-${index}`">
           {{ ingredient.amount }} {{ ingredient.item }}
         </p>
       </v-col>
 
-      <v-divider vertical></v-divider>
+      <v-divider v-if="$vuetify.breakpoint.smAndUp" vertical></v-divider>
 
       <v-col>
         <h2>Instructions</h2>
@@ -64,7 +64,11 @@
         </template>
       </v-col>
     </v-row>
+    <v-divider class="my-4"></v-divider>
     <v-row>
+      <v-col cols="auto">
+        <RecipeDialog edit />
+      </v-col>
       <v-spacer></v-spacer>
       <v-col cols="auto">
         <DeleteRecipeDialog />
@@ -116,6 +120,5 @@ export default {
       return arr.join('');
     }
   }
-
 }
 </script>

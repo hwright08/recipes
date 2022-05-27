@@ -7,8 +7,14 @@
         outlined
         block
       >
-        <v-icon left>mdi-plus</v-icon>
-        Add Recipe
+        <template v-if="edit">
+          <v-icon left>mdi-pencil</v-icon>
+          Edit Recipe
+        </template>
+        <template v-else>
+          <v-icon left>mdi-plus</v-icon>
+          Add Recipe
+        </template>
       </v-btn>
     </template>
 
@@ -17,7 +23,7 @@
       <v-card-text>
         <v-form ref="form">
           <v-row>
-            <v-col>
+            <v-col cols="12" md="6">
               <Label required for="title">Recipe Name</Label>
               <TextField
                 v-model="formData.title"
@@ -171,12 +177,16 @@
 <script>
 import required from '~/mixins/required';
 import { cloneDeep } from 'lodash';
-import { mapActions } from 'vuex';
+import { mapState, mapActions } from 'vuex';
 
 export default {
-  name: 'AddRecipeDialog',
+  name: 'RecipeDialog',
 
   mixins: [required],
+
+  props: {
+    edit: { type: Boolean, default: false }
+  },
 
   data: () => ({
     ingredientCount: 1,
@@ -187,6 +197,23 @@ export default {
       notes: []
     }
   }),
+
+  computed: {
+    ...mapState(['recipeDetails'])
+  },
+
+  watch: {
+    dialogOpen(val) {
+      if (val && this.edit) {
+        let details = this.recipeDetails;
+        this.formData = {
+          ...details,
+          instructions: details.instructions.map(i => ({ text: i })),
+          notes: details.notes.map(n => ({ text: n }))
+        };
+      }
+    }
+  },
 
   methods: {
     ...mapActions(['getRecipes']),
@@ -238,13 +265,20 @@ export default {
       data.instructions = data.instructions.map(i => i.text);
       data.notes = data.notes.map(i => i.text);
 
-      debugger;
-
       // create a new recipe
-      let ref = await this.$fire.firestore.collection('recipe').doc();
-      ref.set(data);
+      if (!this.edit) {
+        let ref = await this.$fire.firestore.collection('recipe').doc();
+        ref.set(data);
+
+      } else {
+        // edit recipe
+        let ref = await this.$fire.firestore.collection('recipe')
+          .doc(this.recipeDetails.id)
+          .update(data);
+      }
 
       await this.getRecipes();
+      this.cancel();
     }
   }
 }

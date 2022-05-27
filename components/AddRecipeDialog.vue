@@ -1,12 +1,15 @@
 <template>
   <v-dialog v-model="dialogOpen" max-width="1000px" persistent>
-    <template #activator="{ on, attrs }">
+    <template #activator="{ on }">
       <v-btn
         v-on="on"
-        v-bind="attrs"
+        v-bind="$attrs"
         outlined
         block
-      >Add Recipe</v-btn>
+      >
+        <v-icon left>mdi-plus</v-icon>
+        Add Recipe
+      </v-btn>
     </template>
 
     <v-card>
@@ -168,6 +171,7 @@
 <script>
 import required from '~/mixins/required';
 import { cloneDeep } from 'lodash';
+import { mapActions } from 'vuex';
 
 export default {
   name: 'AddRecipeDialog',
@@ -185,6 +189,8 @@ export default {
   }),
 
   methods: {
+    ...mapActions(['getRecipes']),
+
     addIngredient() {
       this.formData.ingredients.push({
         amount: null,
@@ -237,6 +243,8 @@ export default {
       // create a new recipe
       let ref = await this.$fire.firestore.collection('recipe').doc();
       ref.set(data);
+
+      await this.getRecipes();
     }
   }
 }

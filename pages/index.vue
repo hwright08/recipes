@@ -64,6 +64,12 @@
         </template>
       </v-col>
     </v-row>
+    <v-row>
+      <v-spacer></v-spacer>
+      <v-col cols="auto">
+        <DeleteRecipeDialog />
+      </v-col>
+    </v-row>
   </v-container>
   <v-container v-else>
     <p>No Recipe Selected</p>

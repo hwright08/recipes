@@ -14,7 +14,7 @@ export const mutations = {
 };
 
 export const actions = {
-  async getRecipes({ commit }) {
+  async getRecipes({ commit, state }) {
     let { docs } = await this.$fire.firestore.collection('recipe').get();
     let recipes = docs
       .map(d => {
@@ -28,6 +28,7 @@ export const actions = {
       }).sort((a, b) => a.title > b.title ? 1 : -1);
 
     commit('setRecipes', recipes);
+    commit('setRecipeDetails', recipes[0]);
   },
 
   async getRecipeDetails({ commit, state }, id) {

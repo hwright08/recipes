@@ -1,7 +1,7 @@
 <template>
   <v-container v-if="recipeDetails.id" class="pa-12">
     <v-row no-gutters align="center">
-      <v-col cols="auto">
+      <v-col v-if="recipeDetails.favorite" cols="auto">
         <v-icon color="amber" large>mdi-star</v-icon>
       </v-col>
       <v-col>

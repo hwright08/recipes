@@ -1,6 +1,7 @@
 <template>
   <v-app>
     <v-navigation-drawer app>
+      <AddRecipeDialog />
       <v-expansion-panels accordion multiple>
         <v-expansion-panel
           v-for="group in groupedRecipes"
@@ -9,21 +10,20 @@
           <v-expansion-panel-header class="grey lighten-4 py-4" style="min-height: 24px">{{ group.category }}</v-expansion-panel-header>
           <v-expansion-panel-content class="pa-0">
             <v-list class="pa-0" dense>
-              <v-list-item-group @change="updateDetails">
-                <v-list-item
-                  v-for="recipe in group.items"
-                  :key="recipe.title"
-                  :value="recipe.id"
-                  single-line
-                >
-                  <v-list-item-icon class="mr-3">
-                    <v-icon v-if="recipe.favorite" color="amber">mdi-star</v-icon>
-                  </v-list-item-icon>
-                  <v-list-item-content>
-                    <v-list-item-title>{{ recipe.title}}</v-list-item-title>
-                  </v-list-item-content>
-                </v-list-item>
-              </v-list-item-group>
+              <v-list-item
+                v-for="recipe in group.items"
+                :key="recipe.title"
+                :value="recipe.id"
+                single-line
+                @click="updateDetails(recipe.id)"
+              >
+                <v-list-item-icon class="mr-3">
+                  <v-icon v-if="recipe.favorite" color="amber">mdi-star</v-icon>
+                </v-list-item-icon>
+                <v-list-item-content>
+                  <v-list-item-title>{{ recipe.title}}</v-list-item-title>
+                </v-list-item-content>
+              </v-list-item>
             </v-list>
           </v-expansion-panel-content>
         </v-expansion-panel>
@@ -69,9 +69,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss">
-  .v-expansion-panel-content__wrap {
-    padding: 0;
-  }
-</style>

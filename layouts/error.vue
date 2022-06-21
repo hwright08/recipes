@@ -5,8 +5,9 @@
     </h1>
     <h1 v-else>
       {{ otherError }}
+      {{ error.message }}
     </h1>
-    <NuxtLink to="/">
+    <NuxtLink to="/signin">
       Home page
     </NuxtLink>
   </v-app>

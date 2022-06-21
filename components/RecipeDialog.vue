@@ -1,5 +1,5 @@
 <template>
-  <v-dialog v-model="dialogOpen" max-width="1000px" persistent>
+  <v-dialog v-model="dialogOpen" max-width="1200px" persistent>
     <template #activator="{ on }">
       <v-btn
         v-on="on"
@@ -166,7 +166,7 @@
           <v-spacer></v-spacer>
           <v-col cols="auto">
             <v-btn text @click.stop="cancel">Cancel</v-btn>
-            <v-btn @click.stop="save">Save</v-btn>
+            <v-btn @click.stop="save" class="primary">Save</v-btn>
           </v-col>
         </v-row>
       </v-card-actions>
@@ -199,7 +199,8 @@ export default {
   }),
 
   computed: {
-    ...mapState(['recipeDetails'])
+    ...mapState('recipe', ['recipeDetails']),
+    ...mapState(['loggedInUser'])
   },
 
   watch: {
@@ -216,7 +217,7 @@ export default {
   },
 
   methods: {
-    ...mapActions(['getRecipes']),
+    ...mapActions('recipe', ['getRecipes']),
 
     addIngredient() {
       this.formData.ingredients.push({
@@ -264,6 +265,7 @@ export default {
       let data = cloneDeep(this.formData);
       data.instructions = data.instructions.map(i => i.text);
       data.notes = data.notes.map(i => i.text);
+      data.user_id = this.loggedInUser.uid;
 
       // create a new recipe
       if (!this.edit) {

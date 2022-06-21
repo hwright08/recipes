@@ -38,11 +38,11 @@ export default {
   }),
 
   computed: {
-    ...mapState(['recipeDetails'])
+    ...mapState('recipe', ['recipeDetails'])
   },
 
   methods: {
-    ...mapActions(['getRecipes']),
+    ...mapActions('recipe', ['getRecipes']),
 
     async deleteRecipe() {
       let ref = await this.$fire.firestore.collection('recipe').doc(this.recipeDetails.id);

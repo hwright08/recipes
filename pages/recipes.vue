@@ -89,10 +89,12 @@ import formatTime from '~/mixins/formatTime';
 export default {
   name: 'AllRecipes',
 
+  layout: 'recipes',
+
   mixins: [formatTime],
 
   computed: {
-    ...mapState(['recipes', 'recipeDetails']),
+    ...mapState('recipe', ['recipes', 'recipeDetails']),
 
     totalTime() {
       let cookTime = this.recipeDetails.cook_time || 0;

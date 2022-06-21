@@ -1,4 +1,5 @@
-import colors from 'vuetify/es5/util/colors'
+import colors from 'vuetify/es5/util/colors';
+import firebaseConfig from './firebase.config';
 
 export default {
   // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
@@ -44,16 +45,16 @@ export default {
   ],
 
   firebase: {
-    config: {
-      apiKey: 'AIzaSyCuxcvxTJkAd_uQhMUTCAE15V_s_6rOTPk',
-      authDomain: 'wright-recipes.firebaseapp.com',
-      projectId: 'wright-recipes',
-      storageBucket: 'wright-recipes.appspot.com',
-      messagingSenderId: '874234789220',
-      appId: '1:874234789220:web:2d1cd4becbe3d026e20e71'
-    },
+    config: firebaseConfig.config,
     services: {
-      firestore: true // Just as example. Can be any other service.
+      firestore: true, // Just as example. Can be any other service.
+      auth: {
+        persistence: 'local',
+        initialize: {
+          onAuthStateChangedAction: 'onAuthStateChangedAction',
+          subscribeManually: false,
+        }
+      }
     }
   },
 
@@ -83,5 +84,7 @@ export default {
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
-  }
+  },
+
+  middleware: ['auth'],
 }

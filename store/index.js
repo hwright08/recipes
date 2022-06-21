@@ -1,36 +1,29 @@
 export const state = () => ({
-  recipes: [],
-  recipeDetails: {}
+  loggedInUser: {}
 });
 
 export const mutations = {
-  setRecipes(state, recipes) {
-    state.recipes = recipes;
-  },
-
-  setRecipeDetails(state, details) {
-    state.recipeDetails = details;
+  SET_USER(state, user) {
+    state.loggedInUser = user;
   }
 };
 
 export const actions = {
-  async getRecipes({ commit, state }) {
-    let { docs } = await this.$fire.firestore.collection('recipe').get();
-    let recipes = docs
-      .map(d => {
-        let data = d.data();
-        return {
-          ...data,
-          id: d.id,
-        }
-      }).sort((a, b) => a.title > b.title ? 1 : -1);
+  async onAuthStateChangedAction(state, { authUser, claims }) {
+    if (!authUser) {
+      state.commit('SET_USER', null);
 
-    commit('setRecipes', recipes);
-    commit('setRecipeDetails', recipes[0]);
+    } else {
+      const { uid, email, name } = authUser;
+      state.commit('SET_USER', { uid, email, name });
+    }
   },
 
-  async getRecipeDetails({ commit, state }, id) {
-    let recipe = state.recipes.find(r => r.id === id);
-    commit('setRecipeDetails', recipe);
+  async nuxtServerInit({ dispatch }, { res }) {
+    if (res && res.locals && res.locals.user) {
+      const { allClaims: claims, idToken: token, ...authUser } = res.locals.user;
+
+      await dispatch('onAuthStateChangedAction', { authUser, claims, token });
+    }
   }
-}
+};

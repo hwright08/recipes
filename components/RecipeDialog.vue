@@ -4,8 +4,7 @@
       <v-btn
         v-on="on"
         v-bind="$attrs"
-        outlined
-        block
+        text
       >
         <template v-if="edit">
           <v-icon left>mdi-pencil</v-icon>

@@ -30,16 +30,16 @@
             type="password"
             :rules="[ required ]"
           />
-        </v-form>
 
-        <v-btn class="my-4" color="primary" block @click="handleAccountAction">
-          {{ createAccount ? 'Create Account' : 'Log In' }}
-        </v-btn>
-        <div class="d-flex justify-center">
-          <v-btn small text @click="swapType">
-            {{ !createAccount ? 'Create Account' : 'Log In' }}
+          <v-btn class="my-4" color="primary" block @click="handleAccountAction" type="submit">
+            {{ createAccount ? 'Create Account' : 'Log In' }}
           </v-btn>
-        </div>
+          <div class="d-flex justify-center">
+            <v-btn small text @click="swapType">
+              {{ !createAccount ? 'Create Account' : 'Log In' }}
+            </v-btn>
+          </div>
+        </v-form>
       </v-card-text>
     </v-card>
   </v-container>

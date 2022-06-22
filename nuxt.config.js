@@ -86,5 +86,7 @@ export default {
   build: {
   },
 
-  middleware: ['auth'],
+  router: {
+    middleware: ['auth'],
+  }
 }

@@ -1,7 +1,6 @@
 <template>
   <v-app>
     <v-navigation-drawer v-model="drawer" app clipped>
-      <RecipeDialog />
       <v-expansion-panels accordion multiple>
         <v-expansion-panel
           v-for="group in groupedRecipes"
@@ -17,8 +16,8 @@
                 single-line
                 @click="updateDetails(recipe.id)"
               >
-                <v-list-item-icon class="mr-3">
-                  <v-icon v-if="recipe.favorite" color="amber">mdi-star</v-icon>
+                <v-list-item-icon class="mr-0">
+                  <v-icon v-if="recipe.favorite" color="amber" small>mdi-star</v-icon>
                 </v-list-item-icon>
                 <v-list-item-content>
                   <v-list-item-title>{{ recipe.title}}</v-list-item-title>
@@ -59,13 +58,13 @@ export default {
     ...mapState('recipe', ['recipes']),
 
     categories() {
-      return uniq(this.recipes.map(r => r.category)).sort((a,b) => a > b ? 1 : -1);
+      return uniq(this.recipes.map(r => r.category.trim())).sort((a,b) => a > b ? 1 : -1);
     },
 
     groupedRecipes() {
       return this.categories.map(c => ({
         category: c,
-        items: this.recipes.filter(r => r.category === c)
+        items: this.recipes.filter(r => r.category.trim() === c)
       }));
     }
   },
@@ -79,3 +78,13 @@ export default {
   }
 }
 </script>
+
+<style>
+  .v-expansion-panel::before {
+    box-shadow: none !important;
+  }
+
+  .v-expansion-panels {
+    border: 1px solid #E0E0E0;
+  }
+</style>

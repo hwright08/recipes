@@ -6,9 +6,7 @@
       <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
     </v-app-bar> -->
 
-    <v-app-bar app>
-      <v-toolbar-title>My Recipes</v-toolbar-title>
-    </v-app-bar>
+    <Header />
 
     <v-main >
       <Nuxt />

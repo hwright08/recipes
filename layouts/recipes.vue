@@ -30,9 +30,7 @@
       </v-expansion-panels>
     </v-navigation-drawer>
 
-    <v-app-bar v-if="$vuetify.breakpoint.mdAndDown" app clipped-left>
-      <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
-    </v-app-bar>
+    <Header />
 
     <v-main >
       <Nuxt />

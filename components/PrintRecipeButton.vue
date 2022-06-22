@@ -16,7 +16,7 @@ export default {
   mixins: [formatTime],
 
   computed: {
-    ...mapState(['recipeDetails'])
+    ...mapState('recipe', ['recipeDetails'])
   },
 
   methods: {

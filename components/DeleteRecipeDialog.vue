@@ -6,7 +6,10 @@
         v-bind="$attrs"
         color="red"
         outlined
-      >Delete Recipe</v-btn>
+      >
+        <v-icon left>mdi-delete</v-icon>
+        Delete recipe
+      </v-btn>
     </template>
 
     <v-card>
@@ -21,7 +24,9 @@
         <v-row>
           <v-spacer></v-spacer>
           <v-btn text @click.stop="dialogOpen = false">Cancel</v-btn>
-          <v-btn @click="deleteRecipe" color="error">Delete</v-btn>
+          <v-btn @click="deleteRecipe" color="error">
+            Delete
+          </v-btn>
         </v-row>
       </v-card-actions>
     </v-card>

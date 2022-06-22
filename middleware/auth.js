@@ -1,9 +1,10 @@
-export default function ({ store, route }) {
+export default function ({ store, route, redirect }) {
   const loggedInUser = store.state.loggedInUser;
 
-  if (['/signin', '/', ''].includes(route.path) && loggedInUser) {
+  if (!loggedInUser) return redirect('/');
+
+  if (loggedInUser && ['/', ''].includes(route.path)) {
     return redirect('/recipes');
   }
 
-  if (!loggedInUser) return redirect('/signin');
 }

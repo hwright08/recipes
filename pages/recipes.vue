@@ -97,8 +97,8 @@ export default {
     ...mapState('recipe', ['recipes', 'recipeDetails']),
 
     totalTime() {
-      let cookTime = this.recipeDetails.cook_time || 0;
-      let prepTime = this.recipeDetails.prep_time || 0;
+      let cookTime = parseInt(this.recipeDetails.cook_time) || 0;
+      let prepTime = parseInt(this.recipeDetails.prep_time) || 0;
       return this.formatTime(cookTime + prepTime);
     },
 

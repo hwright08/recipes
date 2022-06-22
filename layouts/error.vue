@@ -7,7 +7,7 @@
       {{ otherError }}
       {{ error.message }}
     </h1>
-    <NuxtLink to="/signin">
+    <NuxtLink to="/">
       Home page
     </NuxtLink>
   </v-app>

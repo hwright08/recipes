@@ -4,7 +4,12 @@
 
     <v-spacer></v-spacer>
 
-    <RecipeDialog v-if="loggedInUser.uid" />
+    <RecipeDialog v-if="showActions" />
+    <v-btn
+      v-if="showActions"
+      text
+      @click="logOut"
+    >Log Out</v-btn>
   </v-app-bar>
 </template>
 
@@ -15,13 +20,16 @@ export default {
   name: 'Header',
 
   computed: {
-    ...mapState(['loggedInUser'])
+    ...mapState(['loggedInUser']),
+    showActions() {
+      return this.loggedInUser && this.loggedInUser.uid;
+    }
   },
 
   methods: {
     async logOut() {
       await this.$fire.auth.signOut();
-      this.$router.replace('/');
+      this.$router.push('/');
     }
   }
 }
